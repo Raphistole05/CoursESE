@@ -69,21 +69,26 @@ wait
 lp
 	subs r0,r0,#1				; decrement
 	bne  lp						; loop until 0
+	
+	
+	
 	mov r11, lr
 	bl Ext_Buttons_GetState
+	mov lr, r11
+	
 	
 	cmp r0, #1
-	moveq timeSleep, #100
+	addeq timeSleep, timeSleep, #100
 
 	cmp r0, #2
-	moveq timeSleep, #7500
+	moveq timeSleep, #1000
 	
 	cmp r0, #4
 	moveq timeSleep, #20000
 	
 	cmp r0, #8
 	moveq timeSleep, #40000
-	mov lr, r11
+	
 	
 	
 	bx   lr						; return
