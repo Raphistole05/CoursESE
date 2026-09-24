@@ -14,7 +14,7 @@
 	IMPORT	Ext_LED_PWM
 
 
-ledDown		RN 3				; name for register alias
+ledDown		RN 8				; name for register alias
 ledUp		RN 4
 seqCnt		RN 5
 dtyDown		RN 7
@@ -33,10 +33,14 @@ loop_k2000
 lp_1
 	mov	r0,ledDown				; first parameter
 	mov	r1,dtyDown				; second parameter
+;	mov r8,ledDown				; // Save the led in a register
 	bl	Ext_LED_PWM				; set led power
+;	mov ledDown,r8				; // reload the last led
 	mov	r0,ledUp				; first parameter
 	mov	r1,dtyUp				; second parameter
+;	mov r8,ledDown				; // Save the led in a register
 	bl	Ext_LED_PWM				; set led power
+;	mov ledDown,r8				; // reload the last led
 	bl	wait					; wait a moment (dummy loop)
 	add dtyUp,dtyUp,#1			; increment led power
 	subs dtyDown,dtyDown,#1		; decrement led power
@@ -53,6 +57,7 @@ lp_1
 	ldrbeq	ledUp,[r0]			;   equal -> get led up position 0
 	addne	r1,seqCnt,#1		;   not   -> increment offset
 	ldrbne	ledUp,[r0,r1]		;            get led up position
+	
 	b	loop_k2000				; loop animation
 	ENDP
 
