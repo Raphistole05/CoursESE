@@ -19,6 +19,7 @@ ledUp		RN 4
 seqCnt		RN 5
 dtyDown		RN 7
 dtyUp		RN 6
+timeSleep	RN 9
 
 asm_main  PROC
 	bl  Ext_Buttons_Init		; init buttons
@@ -26,6 +27,7 @@ asm_main  PROC
 	mov	seqCnt,#0				; clear sequence counter
 	mov ledDown,#1				; led to clear is 0
 	mov ledUp,#2				; led to set is 1
+	mov timeSleep, #40000
 loop_k2000
 ;-------------------------------------------------------------------------------
 	mov	dtyDown,#100			; intensity max is 100
@@ -59,15 +61,35 @@ lp_1
 	ldrbne	ledUp,[r0,r1]		;            get led up position
 	
 	b	loop_k2000				; loop animation
-	ENDP
+	
 
 ;-------------------------------------------------------------------------------
 wait
-	mov  r0,#40000				; for a certain delay
+	mov  r0, timeSleep			; for a certain delay
 lp
 	subs r0,r0,#1				; decrement
 	bne  lp						; loop until 0
+	mov r11, lr
+	bl Ext_Buttons_GetState
+	
+	cmp r0, #1
+	moveq timeSleep, #100
+
+	cmp r0, #2
+	moveq timeSleep, #7500
+	
+	cmp r0, #4
+	moveq timeSleep, #20000
+	
+	cmp r0, #8
+	moveq timeSleep, #40000
+	mov lr, r11
+	
+	
 	bx   lr						; return
+	
+	ENDP
+	
 ;-------------------------------------------------------------------------------
 sequence	DCB 1,2,4,8,4,2		; sequence of LEDs numbers
 length
