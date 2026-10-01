@@ -62,6 +62,45 @@ loop
 NewEntry
 ; TODO add your code here
 
+	ldr	r0,=MsgName
+	bl	strOut			; display message
+	mov r0, #4+8+4		; ask for 16 bytes
+	bl New				; call new
+	
+						; Get the last personne and update the pointer
+	ldr r4, =Header
+	ldr r5, [r4]		; load in r5 what is in Header
+	cmp r5, #0			; compare with 0
+	streq r0, [r4]		; if equal store the value r0 in Header
+	beq endLoopUpdateNewPerson	; jump end of the loop
+loopUpdateNewPerson
+	ldr r5, [r4]			; load the value of the pointer
+	cmp r5, #0				
+	movne r4, r5			; if r5 != 0 : r4 = r5;
+	bne loopUpdateNewPerson ; if r5 != 0 : jump loop;
+							; if r5 == 0 : affect the [r4] to the value
+	str r0, [r4]						
+endLoopUpdateNewPerson
+	
+	mov r4 , #0
+	str r4, [r0]		; Set 0 the next pontiet to the new persone
+	
+	add r0, r0, #4		; Move 4 bytes to write the char
+	
+	mov	r1,#8-1			; Keep place for the '\0'
+	bl	strIn			; read answer
+	
+	
+	add r0, r0, #8		; Move 8 bytes to write the int
+	
+	mov r4, r0
+	ldr	r0,=MsgAge
+	bl	strOut			; display message
+	bl	decIn			; read answer
+	mov r5, r0			; value int in r5
+	
+	str r5, [r4]
+	
 	b	loop
 
 
@@ -70,6 +109,31 @@ NewEntry
 ;=================================================================
 ViewDatabase
 ; TODO add your code here
+	ldr r4, =Header
+	ldr r5, [r4]		; load in r5 what is in Header
+	cmp r5, #0			; compare with 0
+	beq endLoopViewPerson	; jump end of the loop
+loopViewPerson
+	ldr r5, [r4]			; load the value of the pointer
+	
+	ldr	r0,=MsgDspName
+	bl	strOut			; display message
+	mov r0, r4
+	add r0, r0, #4
+	bl	strOut			; display Name
+	ldr	r0,=MsgDspAge		; display message
+	bl	strOut			; display Name
+	ldr r0, [r4 , #12]		; display Age
+	bl	decOut			; display message
+	
+	
+	
+	
+	cmp r5, #0				
+	movne r4, r5			; if r5 != 0 : r4 = r5;
+	bne loopViewPerson ; if r5 != 0 : jump loop;
+	
+endLoopViewPerson
 
 	B	loop			; yes -> return
 
