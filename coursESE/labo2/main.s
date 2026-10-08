@@ -215,6 +215,8 @@ getLenChain
 bigLoop 
 	ldr r4, =Header
 	ldr r5, [r4]
+	ldr r4, [r4]
+	ldr r5, [r5]
 smallLoop
 	; loop
 	; confdition to change
