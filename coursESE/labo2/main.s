@@ -112,7 +112,9 @@ ViewDatabase
 	ldr r4, =Header
 	ldr r5, [r4]		; load in r5 what is in Header
 	cmp r5, #0			; compare with 0
-	beq endLoopViewPerson	; jump end of the loop
+	beq loop	; jump end of the loop
+	
+	movne r4, r5			; if r5 != 0 : r4 = r5;
 loopViewPerson
 	ldr r5, [r4]			; load the value of the pointer
 	
@@ -133,7 +135,6 @@ loopViewPerson
 	movne r4, r5			; if r5 != 0 : r4 = r5;
 	bne loopViewPerson ; if r5 != 0 : jump loop;
 	
-endLoopViewPerson
 
 	B	loop			; yes -> return
 
