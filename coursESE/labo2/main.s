@@ -52,9 +52,9 @@ loop
 	cmp	r0,#'s'
 	beq	SortDatabase	; sort database
 	cmp	r0,#'Q'
-	beq	Quit			; quit
+	beq.w	Quit			; quit
 	cmp	r0,#'q'
-	beq	Quit			; quit
+	beq.w	Quit			; quit
 	b	loop
 ;=================================================================
 ;------------------------ NEW ENTRY ------------------------------
@@ -144,7 +144,51 @@ loopViewPerson
 ;=================================================================
 DeleteEntry
 ; TODO add your code here
+	ldr	r0,=MsgName
+	bl	strOut			; display message
+	mov r6, #0
+	ldr r0, =Answer 
+	str r6, [r0]
+	str r6, [r0, #4]
+	mov	r1,#8-1			; Keep place for the '\0'
+	bl	strIn			; read answer
+	ldr r6, [r0]		; get the name in the r6
+	ldr r7, [r0, #4]		; get the name in the r7
+	
+	
+	ldr r4, =Header		; get the addr of the header
+		
+loopDelPerson
+	ldr r5, [r4]		; load in r5 what is in Header
+	cmp r5, #0			; compare with 0
+	beq loop			; jump end of the loop if equal
+	ldr r8, [r5, #4]		; load the first 4 char in r8
+	ldr r9, [r5, #8]		; load the next 4 char in r9
+	; compare r8 et r6 ainsi que r7 et r9
+	cmp r6, r8
+	bne notEqual
+	cmp r7, r9
+	bne notEqual	
+	
+	mov r10, r4
+	cmp r4, #0
+	ldrne r4, [r4]
+	cmp r4, #0
+	ldrne r4, [r4]
+	str r4, [r10]
+	b loop
+	
+	
+notEqual
+	ldr r4, [r4]
+	cmp r4, #0
+	bne loopDelPerson ; if r5 != 0 : jump loop;
+	b loop 				; if the name is not in the boucle we stop
 
+	
+
+
+	
 	B	loop
 
 ;=================================================================
@@ -152,6 +196,60 @@ DeleteEntry
 ;=================================================================
 SortDatabase
 ; TODO add your code here
+
+	; get the len of the pointer chain dans r6
+	ldr r4, =Header
+	mov r6, #0
+getLenChain
+	ldr r4, [r4]
+	cmp r4, #0
+	addne r6, r6, #1	
+	bne getLenChain
+	
+	sub r6, r6, #1
+	cmp r6, #1
+	beq loop
+	
+; ici le r6 c'est poru la grande boucle le r7 c'est la petite boucle
+	
+bigLoop 
+	ldr r4, =Header
+	ldr r5, [r4]
+smallLoop
+	; loop
+	; confdition to change
+	ldr r8, [r4, #4+8]
+	ldr r9, [r5, #4+8]
+	cmp r8, r9
+	bmi noChange
+	
+	ldr r8, [r5]
+	str r8, [r4]
+	ldr r8, [r8]
+	str r8, [r5]
+	ldr r8, [r4]
+	str r4, [r8]
+noChange
+	
+	mov r4, r5
+	ldr r5, [r5]
+	
+	; end loop
+	sub r7, r7, #1		
+	cmp r7, #0
+	beq smallLoop
+	
+					
+	sub r6, r6, #1		
+	cmp r6, #0
+	bne bigLoop
+	
+	
+	; loop in the boucle 
+	
+	
+	; if greater than the next switch
+
 
 	B	loop
 ;=================================================================
