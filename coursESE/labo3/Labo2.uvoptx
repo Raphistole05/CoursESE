@@ -167,8 +167,8 @@
       <MemoryWindow2>
         <Mm>
           <WinNumber>2</WinNumber>
-          <SubType>0</SubType>
-          <ItemText>0xE000E010</ItemText>
+          <SubType>8</SubType>
+          <ItemText>&amp;TableB</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow2>
