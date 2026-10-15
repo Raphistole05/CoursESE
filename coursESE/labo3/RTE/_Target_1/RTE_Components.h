@@ -15,12 +15,6 @@
  */
 #define CMSIS_device_header "stm32f7xx.h"
 
-/* Keil::Compiler&ARM Compiler:I/O:STDIN&ITM@1.2.0 */
-#define RTE_Compiler_IO_STDIN           /* Compiler I/O: STDIN */
-#define RTE_Compiler_IO_STDIN_ITM       /* Compiler I/O: STDIN ITM */
-/* Keil::Compiler&ARM Compiler:I/O:STDOUT&ITM@1.2.0 */
-#define RTE_Compiler_IO_STDOUT          /* Compiler I/O: STDOUT */
-#define RTE_Compiler_IO_STDOUT_ITM      /* Compiler I/O: STDOUT ITM */
 /* Keil::Device:STM32Cube Framework:Classic@1.2.7 */
 #define RTE_DEVICE_FRAMEWORK_CLASSIC
 /* Keil::Device:STM32Cube HAL:Common@1.2.7 */

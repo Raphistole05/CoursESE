@@ -1,6 +1,5 @@
 --cpu Cortex-M7.fp.sp
 ".\objects\main.o"
-".\objects\retarget_io.o"
 ".\objects\stm32f7xx_hal.o"
 ".\objects\stm32f7xx_hal_cortex.o"
 ".\objects\stm32f7xx_hal_gpio.o"
