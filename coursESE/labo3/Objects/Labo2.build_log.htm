@@ -21,15 +21,12 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.3.1.0
 Dialog DLL:      TCM.DLL V1.56.6.0
  
 <h2>Project:</h2>
-C:\Users\raphael.copt\Desktop\Cours\CoursESE\coursESE\labo2\Labo2.uvprojx
-Project File Date:  10/01/2026
+C:\Users\raphael.copt\Desktop\Cours\CoursESE\coursESE\labo3\Labo2.uvprojx
+Project File Date:  10/15/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target_1'
-assembling main.s...
-linking...
-Program Size: Code=19488 RO-data=1104 RW-data=4132 ZI-data=1888  
 ".\Objects\Labo2.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -45,6 +42,8 @@ Package Vendor: HessoValais
                 HessoValais::Extension_board@1.2.0
                 Software to use extension keyboard, UART, buttons and leds.
    * Component: Assembler main call Version: 1.0.0
+   * Component: 26_PIN Version: 1.2.0
+   * Component: Clock Version: 1.0.0
 
 Package Vendor: Keil
                 https://www.keil.com/pack/Keil.ARM_Compiler.1.7.2.pack
@@ -61,15 +60,19 @@ Package Vendor: Keil
    * Component: Classic Version: 1.2.7
    * Component: Common Version: 1.2.7
    * Component: Cortex Version: 1.2.7
+   * Component: DMA Version: 1.2.7
    * Component: GPIO Version: 1.2.7
    * Component: PWR Version: 1.2.7
    * Component: RCC Version: 1.2.7
+   * Component: SPI Version: 1.2.7
    * Component: Startup Version: 1.2.4
 
 <h2>Collection of Component include folders:</h2>
   ./RTE/Device/STM32F746NGHx
+  ./RTE/Hesso_pack
   ./RTE/_Target_1
   C:/Keil_v5/ARM/CMSIS/6.2.0/CMSIS/Core/Include
+  C:/Keil_v5/HessoValais/Extension_board/1.2.0/extension_board
   C:/Keil_v5/Keil/STM32F7xx_DFP/2.12.0/Drivers/CMSIS/Device/ST/STM32F7xx/Include
   C:/Keil_v5/Keil/STM32F7xx_DFP/2.12.0/Drivers/STM32F7xx_HAL_Driver/Inc
 
@@ -80,8 +83,16 @@ Package Vendor: Keil
    * Component: Device:STM32Cube Framework(API)@1.0.0
 
    * Component: HessoValais::Hesso pack:Assembler main call@1.0.0
-      Source file:   extension_board/main_asm.c
       Source file:   extension_board/asmcalls.s
+      Source file:   extension_board/main_asm.c
+
+   * Component: HessoValais::Hesso pack:Extension Board:26_PIN@1.2.0
+      Include file:  extension_board/ext_26pin.h
+      Source file:   extension_board/ext_26pin.c
+
+   * Component: HessoValais::Hesso pack:Utilities:Clock@1.0.0
+      Source file:   extension_board/clock_216.c
+      Include file:  extension_board/clock_216.h
 
    * Component: Keil::Compiler&ARM Compiler:I/O:STDIN&ITM@1.2.0
       Source file:   Source/retarget_io.c
@@ -91,21 +102,25 @@ Package Vendor: Keil
 
    * Component: Keil::Device:STM32Cube Framework:Classic@1.2.7
       Include file:  MDK/Templates/Inc/stm32f7xx_hal_conf.h
-      Source file:   MDK/Templates/Src/stm32f7xx_it.c
-      Include file:  MDK/Templates/Inc/main.h
-      Include file:  MDK/Templates/Inc/stm32f7xx_it.h
       Source file:   MDK/Templates/Src/main.c
       Include file:  MDK/Templates_LL/Inc/main.h
-      Include file:  CMSIS/Driver/Config/RTE_Device.h
       Source file:   MDK/Templates_LL/Src/main.c
+      Include file:  MDK/Templates/Inc/stm32f7xx_it.h
+      Include file:  CMSIS/Driver/Config/RTE_Device.h
       Source file:   MDK/Templates/Src/stm32f7xx_hal_msp.c
+      Source file:   MDK/Templates/Src/stm32f7xx_it.c
+      Include file:  MDK/Templates/Inc/main.h
 
    * Component: Keil::Device:STM32Cube HAL:Common@1.2.7
-      Include file:  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h
       Source file:   Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.c
+      Include file:  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h
 
    * Component: Keil::Device:STM32Cube HAL:Cortex@1.2.7
       Source file:   Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.c
+
+   * Component: Keil::Device:STM32Cube HAL:DMA@1.2.7
+      Source file:   Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma_ex.c
+      Source file:   Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.c
 
    * Component: Keil::Device:STM32Cube HAL:GPIO@1.2.7
       Source file:   Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c
@@ -118,11 +133,15 @@ Package Vendor: Keil
       Source file:   Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.c
       Source file:   Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.c
 
+   * Component: Keil::Device:STM32Cube HAL:SPI@1.2.7
+      Source file:   Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi_ex.c
+      Source file:   Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.c
+
    * Component: Keil::Device:Startup@1.2.4
-      Source file:   MDK/Device/Source/ARM/STM32F74x_75x_OPT.s
       Source file:   Drivers/CMSIS/Device/ST/STM32F7xx/Source/Templates/arm/startup_stm32f746xx.s
-      Source file:   MDK/Device/Source/ARM/STM32F74x_75x_OTP.s
+      Source file:   MDK/Device/Source/ARM/STM32F74x_75x_OPT.s
       Include file:  Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f7xx.h
+      Source file:   MDK/Device/Source/ARM/STM32F74x_75x_OTP.s
       Source file:   Drivers/CMSIS/Device/ST/STM32F7xx/Source/Templates/system_stm32f7xx.c
 Build Time Elapsed:  00:00:00
 </pre>
