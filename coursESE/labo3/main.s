@@ -10,6 +10,7 @@
 
 asm_main PROC
 	
+	
 	bl SystemClock_Config
 	ldr r0, =0xE000E010
 	mov r2, #0
@@ -22,11 +23,14 @@ asm_main PROC
 	mov 	r3, #0x200
 	mov 	r0, #0
 	
+	
 loop
 
 	ldr    r1,=TableA
 	ldr    r0,=TableB
 	mov    r2,#TableB-TableA
+	
+	
 	mov 	r3, #0x200
 	str 	r3, [r4]
 	

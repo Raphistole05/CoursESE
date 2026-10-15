@@ -8,6 +8,7 @@
 // Setup system clock to 216MHz
 //------------------------------------------------------------------------------
 void SystemClock_Config (void) {
+	SCB_EnableICache();
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
   RCC_OscInitTypeDef RCC_OscInitStruct;
 
