@@ -20,4 +20,5 @@
   C:\Keil_v5\Keil\STM32F7xx_DFP\2.12.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_pwr.h \
   C:\Keil_v5\Keil\STM32F7xx_DFP\2.12.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_pwr_ex.h \
   C:\Keil_v5\Keil\STM32F7xx_DFP\2.12.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_spi.h \
-  C:\Keil_v5\Keil\STM32F7xx_DFP\2.12.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_spi_ex.h
+  C:\Keil_v5\Keil\STM32F7xx_DFP\2.12.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_spi_ex.h \
+  RTE\Hesso_pack\clock_216.h

@@ -1,7 +1,7 @@
 #include "stm32f7xx_hal.h"
 
 #include <stdint.h>
-
+#include "clock_216.h"
 
 /*
 static const uint32_t cie1931[101] =
@@ -22,9 +22,17 @@ static const uint32_t cie1931[101] =
 
 
 void ledsInit();
+void front();
+void setLed(uint32_t );
+
+volatile uint32_t * SYSTICK_CTRL = (uint32_t*)0xE000E010;
 
 int main(void)
 {
+	/*
+	SystemClock_Config();
+	*SYSTICK_CTRL = 0;					// Disable SysTick
+	*/
 	GPIO_InitTypeDef GPIO_InitStruct;
 
   /* GPIO Ports Clock Enable */
@@ -35,10 +43,22 @@ int main(void)
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  GPIO_InitStruct.Pin  = GPIO_PIN_14;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  GPIO_InitStruct.Pin  = GPIO_PIN_15;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 	
 	for(;;)
 	{
 		// TODO
-		ledsInit();
+		setLed(0x0);
+		setLed(0xFFFFFFFF);
+		setLed(0xFFFFFFFF);
+		setLed(0xFFFFFFFF);
+		setLed(0xFFAAAAAA);
 	}
 }

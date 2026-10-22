@@ -1,5 +1,5 @@
 # task 1
-# activation de la sortie
+## activation de la sortie
 
 on tourne quand meme à 1,5 us ce qui fait 666 kHz
 
