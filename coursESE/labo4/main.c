@@ -24,8 +24,26 @@ static const uint32_t cie1931[101] =
 void ledsInit();
 void front();
 void setLed(uint32_t );
+void setMulLed(uint32_t, ...);
 
 volatile uint32_t * SYSTICK_CTRL = (uint32_t*)0xE000E010;
+
+#define RESET 0x0
+#define CODE (0xE << 28)
+#define INTENSITY_MAX (0x1F << 25)
+#define RED_MAX (0xff)
+#define GREEN_MAX (0xff << 7)
+#define BLUE_MAX (0xff << 15)
+#define NBLED 20
+
+
+uint32_t newCode(uint32_t intensity, uint32_t RED, uint32_t GREEN, uint32_t BLUE){
+		uint32_t t =  (CODE) | (intensity << 25) | (BLUE << 16) | (GREEN<<8) | (RED) ;
+		return t;
+}
+
+
+
 
 int main(void)
 {
@@ -43,6 +61,10 @@ int main(void)
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  GPIO_InitStruct.Pin  = GPIO_PIN_10;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
   GPIO_InitStruct.Pin  = GPIO_PIN_14;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -52,13 +74,24 @@ int main(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 	
+	
+	
+	uint32_t tabLed[20];
+	for (int i = 0; i< NBLED; i++){
+			tabLed[i] = newCode(0, 255, 0, 0);
+	}
+	
+	
+	
+	setLed(0x0);
+	for (int i = 0; i<20 ; i ++){
+		setLed(0xE0);
+	}
+	
 	for(;;)
 	{
-		// TODO
-		setLed(0x0);
-		setLed(0xFFFFFFFF);
-		setLed(0xFFFFFFFF);
-		setLed(0xFFFFFFFF);
-		setLed(0xFFAAAAAA);
+		setLed(RESET);
+		setMulLed(20, 0xffff0000, 0xff00ff00, 0xff0000ff, 0xffffFFFF, 0xffff0000, 0xff00ff00, 0xff0000ff, 0xffffFFFF, 0xffff0000, 0xff00ff00, 0xff0000ff, 0xffffFFFF, 0xffff0000, 0xff00ff00, 0xff0000ff, 0xffffFFFF, 0xffff0000, 0xff00ff00, 0xff0000ff, 0xffffFFFF);
+		setLed(RESET);
 	}
 }
